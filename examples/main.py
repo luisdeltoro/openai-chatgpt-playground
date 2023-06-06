@@ -3,7 +3,7 @@
 
 from colors import green
 
-from helloworld.greet.greeting import Greeter
+from examples.greet.greeting import Greeter
 
 
 def say_hello() -> None:

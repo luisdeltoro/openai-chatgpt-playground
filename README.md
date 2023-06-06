@@ -43,25 +43,25 @@ In the latter case, Pants locates target metadata for the source files as needed
 Invoking goals on files is straightforward, e.g.,
 
 ```
-pants test helloworld/greet/greeting_test.py
+pants test examples/chatgpt1/chatgpt_test.py
 ```
 
 You can use globs:
 
 ```
-pants lint helloworld/greet/*.py
+pants lint examples/chatgpt1/*.py
 ```
 
 But note that these will be expanded by your shell, so this is equivalent to having used
 
 ```
-pants lint helloworld/greet/__init__.py helloworld/greet/greeting.py helloworld/greet/greeting_test.py
+pants lint examples/chatgpt1/__init__.py examples/chatgpt1/chatgpt.py examples/chatgpt1/chatgpt_test.py
 ```
 
 If you want Pants itself to expand the globs (which is sometimes necessary), you must quote them in the shell:
 
 ```
-pants lint 'helloworld/greet/*.py'
+pants lint 'examples/chatgpt1/*.py'
 ```
 
 You can run on all changed files:
@@ -81,14 +81,14 @@ pants --changed-since=HEAD --changed-dependees=transitive test
 Targets are referenced on the command line using their address, of the form `path/to/dir:name`, e.g.,
 
 ```
-pants lint helloworld/greet:lib
+pants lint examples/chatgpt1:lib
 ```
 
 You can glob over all targets in a directory with a single trailing `:`, or over all targets in a directory
 and all its subdirectories with a double trailing `::`, e.g.,
 
 ```
-pants lint helloworld::
+pants lint examples::
 ```
 
 ## Globbing semantics
@@ -111,14 +111,14 @@ Try these out in this repo!
 
 ```
 pants list ::  # All targets.
-pants list 'helloworld/**/*.py'  # Just targets containing Python code.
+pants list 'examples/**/*.py'  # Just targets containing Python code.
 ```
 
 ## Run linters and formatters
 
 ```
 pants lint ::
-pants fmt helloworld/greet::
+pants fmt examples/chatgpt1::
 ```
 
 ## Run MyPy
@@ -132,28 +132,28 @@ pants check ::
 ```
 pants test ::  # Run all tests in the repo.
 pants test --output=all ::  # Run all tests in the repo and view pytest output even for tests that passed (you can set this permanently in pants.toml).
-pants test helloworld/translator:tests  # Run all the tests in this target.
-pants test helloworld/translator/translator_test.py  # Run just the tests in this file.
-pants test helloworld/translator/translator_test.py -- -k test_unknown_phrase  # Run just this one test by passing through pytest args.
+pants test examples/chatgpt1:tests  # Run all the tests in this target.
+pants test examples/chatgpt1/chatgpt_test.py  # Run just the tests in this file.
+pants test examples/chatgpt1/chatgpt_test.py -- -k test_generate_question  # Run just this one test by passing through pytest args.
 ```
 
 ## Create a PEX binary
 
 ```
-pants package helloworld/main.py
+pants package examples/chatgpt1/chatgpt.py
 ```
 
 ## Run a binary directly
 
 ```
-pants run helloworld/main.py
+pants run examples/chatgpt1/chatgpt.py
 ```
 
 ## Open a REPL
 
 ```
-pants repl helloworld/greet:lib  # The REPL will have all relevant code and dependencies on its sys.path.
-pants repl --shell=ipython helloworld/greet:lib --no-pantsd  # To use IPython, you must disable Pantsd for now.
+pants repl examples/chatgpt1:lib  # The REPL will have all relevant code and dependencies on its sys.path.
+pants repl --shell=ipython examples/chatgpt1:lib --no-pantsd  # To use IPython, you must disable Pantsd for now.
 ```
 
 ## Build a wheel / generate `setup.py`
@@ -161,7 +161,7 @@ pants repl --shell=ipython helloworld/greet:lib --no-pantsd  # To use IPython, y
 This will build both a `.whl` bdist and a `.tar.gz` sdist.
 
 ```
-pants package helloworld/translator:dist
+pants package examples/chatgpt1:dist
 ```
 
 ## Count lines of code
